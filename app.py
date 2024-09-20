@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, send_from_directory
+from flask import Flask, request, render_template, send_from_directory, send_file
 import tempfile
 from PIL import Image, ImageDraw, ImageFont
 import qrcode
@@ -134,7 +134,8 @@ def index():
                 output_file=output_file
             )
 
-            return send_from_directory(tempfile.gettempdir(), 'id_card_output.png')
+            # Allow the user to download the generated ID card
+            return send_file(output_file, as_attachment=True, download_name='id_card.png')
 
     return render_template('index.html')
 
